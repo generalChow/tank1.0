@@ -1,5 +1,7 @@
 package tank.weapon;
 
+import java.awt.Color;
+
 public class Weapon {
 
 	private int x;
@@ -7,6 +9,15 @@ public class Weapon {
 	private int power;
 	private boolean use;
 	private int dir;
+	private Color color;
+	
+	
+	public Color getColor() {
+		return color;
+	}
+	public void setColor(Color color) {
+		this.color = color;
+	}
 	public int getDir() {
 		return dir;
 	}

@@ -4,8 +4,11 @@
 package tank;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
+import tank.weapon.Bullet;
 import util.Constant;
 
 /**
@@ -17,6 +20,18 @@ import util.Constant;
 public class Enemy extends Tank{
 	
 	private int speed;
+	
+	private List<Bullet> bullets = new ArrayList<Bullet>();
+	
+	
+
+	public List<Bullet> getBullets() {
+		return bullets;
+	}
+
+	public void setBullets(List<Bullet> bullets) {
+		this.bullets = bullets;
+	}
 
 	public int getSpeed() {
 		return speed;
@@ -34,7 +49,7 @@ public class Enemy extends Tank{
 		// TODO Auto-generated method stub
 		Random ran = new Random();
 		int rate = ran.nextInt(10);
-		if(rate<1){//随机获取是不是需要改变方向 40%需要改
+		if(rate<1){//随机获取是不是需要改变方向 10%需要改
 		int num = ran.nextInt(4);
 		this.setDir(num+37);
 		}
@@ -88,6 +103,41 @@ public class Enemy extends Tank{
 		this.setLife(100);
 		
 	}
+	
+	public void shoot(int index,Color color,int power,int r,int speed){
+		Bullet b = this.bullets.get(index);
+		b.setDir(this.getDir());
+		b.setX(this.getX());
+		b.setY(this.getY());
+		b.setPower(power);
+		b.setR(r);
+		b.setType("hero");
+		b.setSpeed(speed);
+	}
+	
+	public Bullet shootOne(Bullet b,Color color,int power,int r,int speed){
+		b.setDir(this.getDir());
+		b.setX(this.getX());
+		b.setY(this.getY());
+		b.setPower(power);
+		b.setR(r);
+		b.setType("enemy");
+		b.setSpeed(speed);
+		b.setColor(color);
+		return b;
+	}
+	
+	public boolean isFire(){
+		Random ran = new Random();
+		int num = ran.nextInt(10);
+		if(num<1){
+		return true;
+		}else{
+			return false;
+		}
+	}
+	
+	
 	
 
 }

@@ -5,6 +5,20 @@ import util.Constant;
 public class Bullet extends Weapon {
 	private int speed;
 	
+	private String type;
+	
+	
+	
+
+	public String getType() {
+		return type;
+	}
+
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 
 	public int getSpeed() { 
 		return speed;

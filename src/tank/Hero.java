@@ -32,6 +32,7 @@ public class Hero extends Tank {
 		b.setY(this.getY());
 		b.setPower(power);
 		b.setR(r);
+		b.setType("hero");
 		b.setSpeed(speed);
 	}
 	
