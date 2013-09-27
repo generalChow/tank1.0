@@ -67,7 +67,7 @@ public class Tank {
 
 	}
 
-	public void shoot(int x, int y, int dir) {
+	public void shoot() {
 
 	}
 

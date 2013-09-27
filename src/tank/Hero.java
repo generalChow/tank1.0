@@ -20,9 +20,23 @@ public class Hero extends Tank {
 	}
 
 	@Override
-	public void shoot(int x, int y, int dir) {
+	public void shoot() {
 		// TODO Auto-generated method stub
-		super.shoot(x, y, dir);
+		super.shoot();
+	}
+	
+	public void shoot(int index,Color color,int power,int r,int speed){
+		Bullet b = this.bullets.get(index);
+		b.setDir(this.getDir());
+		b.setX(this.getX());
+		b.setY(this.getY());
+		b.setPower(power);
+		b.setR(r);
+		b.setSpeed(speed);
+	}
+	
+	public void removeBullet(int index){
+		this.bullets.remove(index);
 	}
 
 	@Override

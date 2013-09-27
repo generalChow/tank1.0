@@ -33,7 +33,12 @@ public class Enemy extends Tank{
 	public void move() {
 		// TODO Auto-generated method stub
 		Random ran = new Random();
+		int rate = ran.nextInt(10);
+		if(rate<1){//随机获取是不是需要改变方向 40%需要改
 		int num = ran.nextInt(4);
+		this.setDir(num+37);
+		}
+		//System.out.println(this.toString()+":"+num);
 		if (this.Cross()) {
 			if (this.getX() < 0 && this.getDir() == Constant.getLeft()) {
 				return;
@@ -48,7 +53,7 @@ public class Enemy extends Tank{
 				return;
 			}
 		}
-		switch (num+37) {
+		switch (this.getDir()) {
 		case 37:
 			this.setX(this.getX() - this.getSpeed());
 			break;

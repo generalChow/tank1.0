@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
 
+import tank.Enemy;
 import tank.Hero;
 import tank.weapon.Bullet;
 import util.Constant;
@@ -57,14 +58,9 @@ public class GameMain extends KeyAdapter {
 		} else if (key.getKeyCode() == 32) {
 			if (this.getP().getH1().getBullets().size() > 0&&((timeTemp-this.mills>500||this.mills==0))) {
 				b = this.getP().getH1().getBullets().get(0);
-				h1 = this.getP().getH1();
-				b.setPower(10);
-				b.setX(h1.getX());
-				b.setY(h1.getY());
-				b.setR(5);
-				b.setDir(h1.getDir());
-				b.setSpeed(2);
-				this.getP().getHb().add(b);
+				this.getP().getH1().shoot(0, Color.BLUE, 10, 5, 6);//发射--设置子弹的属性
+				this.getP().getHb().add(b);//把子弹添加到画板
+				this.getP().getH1().removeBullet(0);//把子弹从子弹夹拿出来
 				this.p.getH1().getBullets().remove(0);
 				this.mills=timeTemp;
 			} else if(this.getP().getH1().getBullets().size()==0) {
@@ -73,6 +69,12 @@ public class GameMain extends KeyAdapter {
 			}
 		}else if(key.getKeyChar()=='u'||key.getKeyChar()=='U'){
 			this.p.getH1().reloadBullet();
+		}else if(key.getKeyChar()=='p'||key.getKeyChar()=='P'){//p||P是出敌人的坦克的
+			if(this.getP().getEnemyList().size()==0){//判断坦克是不是还有 没有就new 出来
+				for(int i = 0;i<Constant.getEnemyNum();i++){
+					this.p.getEnemyList().add(new Enemy());
+				}
+			}
 		}
 
 	}

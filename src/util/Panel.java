@@ -108,6 +108,7 @@ public class Panel extends JPanel implements Runnable {
 	
 	
 	public void drawEnemies(Graphics g){
+		setEnemiesXAY();//设置下一秒 敌军坦克xy
 		Enemy e ;
 		for(int i =0;i<this.enemyList.size();i++){
 			e = this.enemyList.get(i);
@@ -137,17 +138,11 @@ public class Panel extends JPanel implements Runnable {
 					hb.get(i).move();
 					if(hb.get(i).Cross()){
 						hb.remove(hb.get(i));
-						System.out.println("删除一课子弹");
-						System.out.println("还剩下"+hb.size());
+						//System.out.println("删除一课子弹");
+						//System.out.println("还剩下"+hb.size());
 					}
 				}
-				if(this.enemyList.size()==0){//判断坦克是不是还有 没有就new 出来
-					for(int i = 0;i<Constant.getEnemyNum();i++){
-						this.enemyList.add(new Enemy());
-					}
-				}else {
-					setEnemiesXAY();
-				}
+				
 				repaint();
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
