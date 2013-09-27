@@ -3,11 +3,19 @@ package util;
 public class Constant {
 
 	private static int pwithd = 400;
-	private static int phieght = 700;
+	private static int phieght = 400;
 	private static int left = 37;
 	private static int up = 38;
 	private static int right = 39;
 	private static int down = 40;
+	private static int enemyNum = 10;
+	
+	public static int getEnemyNum() {
+		return enemyNum;
+	}
+	public static void setEnemyNum(int enemyNum) {
+		Constant.enemyNum = enemyNum;
+	}
 	public static int getPwithd() {
 		return pwithd;
 	}

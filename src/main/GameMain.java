@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 
 import tank.Hero;
 import tank.weapon.Bullet;
+import util.Constant;
 import util.Panel;
 
 public class GameMain extends KeyAdapter {
@@ -84,7 +85,7 @@ public class GameMain extends KeyAdapter {
 
 	public GameMain() {
 		// TODO Auto-generated constructor stub
-		this.p = new Panel();
+		this.p = new Panel(Constant.getEnemyNum());
 		this.jf = new JFrame();
 		this.jf.setLayout(null);
 		this.jf.add(this.p);

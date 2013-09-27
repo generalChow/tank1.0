@@ -1,5 +1,7 @@
 package tank;
 
+import java.awt.Color;
+
 import util.Constant;
 
 public class Tank {
@@ -9,6 +11,17 @@ public class Tank {
 	private int dir;
 	private int life;
 	private int speed;
+	private Color color;
+	
+	
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
 
 	public int getSpeed() {
 		return speed;

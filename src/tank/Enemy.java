@@ -1,35 +1,39 @@
+/**
+ * 
+ */
 package tank;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Random;
 
-import tank.weapon.Bullet;
 import util.Constant;
 
-public class Hero extends Tank {
+/**
+ * @author 周大帅
+ *
+ * @email 463734522@qq.com
+ * 2013年9月27日
+ */
+public class Enemy extends Tank{
+	
+	private int speed;
 
-	private List<Bullet> bullets = new ArrayList<Bullet>();
-
-	public List<Bullet> getBullets() {
-		return bullets;
+	public int getSpeed() {
+		return speed;
 	}
 
-	public void setBullets(List<Bullet> bullets) {
-		this.bullets = bullets;
+	public void setSpeed(int speed) {
+		this.speed = speed;
 	}
-
-	@Override
-	public void shoot(int x, int y, int dir) {
-		// TODO Auto-generated method stub
-		super.shoot(x, y, dir);
-	}
-
+	
+	/* (non-Javadoc)
+	 * @see tank.Tank#move()
+	 */
 	@Override
 	public void move() {
 		// TODO Auto-generated method stub
-//		int x = this.getX();
-//		int y = this.getY();
+		Random ran = new Random();
+		int num = ran.nextInt(4);
 		if (this.Cross()) {
 			if (this.getX() < 0 && this.getDir() == Constant.getLeft()) {
 				return;
@@ -44,7 +48,7 @@ public class Hero extends Tank {
 				return;
 			}
 		}
-		switch (this.getDir()) {
+		switch (num+37) {
 		case 37:
 			this.setX(this.getX() - this.getSpeed());
 			break;
@@ -61,30 +65,24 @@ public class Hero extends Tank {
 		default:
 			break;
 		}
-//		if(this.Cross()){
-//		  this.setX(x);
-//		  this.setY(y);
-//		}
 	}
-
-	public void reloadBullet() {
-		for (int i = 0; i < 20; i++) {
-			Bullet b = new Bullet();
-			this.bullets.add(b);
-		}
-	}
-
-	public Hero(int x, int y, int dir, int speed,Color c) {
+	
+	/**
+	 * 
+	 */
+	public Enemy() {
 		// TODO Auto-generated constructor stub
+		Random ran =  new Random();
+		int x = ran.nextInt(400);
+		int y = ran.nextInt(200);
+		this.setColor(Color.YELLOW);
+		this.speed=3;
+		this.setDir(Constant.getDown());
 		this.setX(x);
 		this.setY(y);
-		this.setDir(dir);
-		this.setSpeed(speed);
-		this.setColor(c);
-		for (int i = 0; i < 20; i++) {
-			Bullet b = new Bullet();
-			this.bullets.add(b);
-		}
+		this.setLife(100);
+		
 	}
+	
 
 }

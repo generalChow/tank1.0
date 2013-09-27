@@ -7,16 +7,28 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+import tank.Enemy;
 import tank.Hero;
+import tank.Tank;
 import tank.weapon.Bullet;
 
 public class Panel extends JPanel implements Runnable {
 	
 	private Hero h1;
 	private List<Bullet> hb;//英雄的子弹
+	private List<Enemy> enemyList;//敌军坦克
 	
 	
 	
+	
+	public List<Enemy> getEnemyList() {
+		return enemyList;
+	}
+
+	public void setEnemyList(List<Enemy> enemyList) {
+		this.enemyList = enemyList;
+	}
+
 	public List<Bullet> getHb() {
 		return hb;
 	}
@@ -41,11 +53,12 @@ public class Panel extends JPanel implements Runnable {
 		super.paint(g);
 		drawHero(g, h1);
 		drawBullet(g);
+	    drawEnemies(g);
 	}
 	
-	public void drawHero(Graphics g,Hero h){
+	public void drawHero(Graphics g,Tank h){
 		
-		g.setColor(Color.cyan);
+		g.setColor(h.getColor());
 				switch(h.getDir()){
 				case 38://方向向上
 					g.fill3DRect(h.getX(), h.getY(), 5, 30, false);
@@ -81,23 +94,36 @@ public class Panel extends JPanel implements Runnable {
 	}
 	
 	public void drawBullet(Graphics g){
+		
 		if(this.hb.size()>0){
 			Bullet b ;
+			g.setColor(Color.BLUE);
 			for(int i = 0;i<this.hb.size();i++){
 				b = this.hb.get(i);
 			g.fill3DRect(b.getX(), b.getY(), b.getR(), b.getR(), false);
-			g.setColor(Color.BLUE);
+			
 			}
 		}
 	}
+	
+	
+	public void drawEnemies(Graphics g){
+		Enemy e ;
+		for(int i =0;i<this.enemyList.size();i++){
+			e = this.enemyList.get(i);
+			drawHero(g, e);
+		}
+	}
+	
 
-	public Panel() {
+	public Panel(int enemyNum) {
 		// TODO Auto-generated constructor stub
-		this.h1 =  new Hero(0, 0, 38,3);
+		this.h1 =  new Hero(0, 0, 38,3,Color.CYAN);
 		this.setSize(Constant.getPwithd(), Constant.getPhieght());
 		this.setBackground(Color.black);
 		System.out.println(this.getHeight());
 		this.hb = new ArrayList<Bullet>();
+		this.enemyList = new ArrayList<Enemy>();
 	}
 
 	@Override
@@ -114,13 +140,29 @@ public class Panel extends JPanel implements Runnable {
 						System.out.println("删除一课子弹");
 						System.out.println("还剩下"+hb.size());
 					}
-					
+				}
+				if(this.enemyList.size()==0){//判断坦克是不是还有 没有就new 出来
+					for(int i = 0;i<Constant.getEnemyNum();i++){
+						this.enemyList.add(new Enemy());
+					}
+				}else {
+					setEnemiesXAY();
 				}
 				repaint();
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+	}
+
+	/**
+	 * 设置run之后的敌军各个坦克的方向
+	 */
+	private void setEnemiesXAY() {
+		// TODO Auto-generated method stub
+		for(int i = 0;i<this.enemyList.size();i++){
+			this.enemyList.get(i).move();
 		}
 	}
 }
