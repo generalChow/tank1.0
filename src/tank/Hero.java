@@ -33,6 +33,7 @@ public class Hero extends Tank {
 		b.setPower(power);
 		b.setR(r);
 		b.setType("hero");
+		b.setUse(true);
 		b.setSpeed(speed);
 	}
 	
@@ -89,13 +90,14 @@ public class Hero extends Tank {
 		}
 	}
 
-	public Hero(int x, int y, int dir, int speed,Color c) {
+	public Hero(int x, int y, int dir, int speed,Color c,int r) {
 		// TODO Auto-generated constructor stub
 		this.setX(x);
 		this.setY(y);
 		this.setDir(dir);
 		this.setSpeed(speed);
 		this.setColor(c);
+		this.setR(r);
 		for (int i = 0; i < 20; i++) {
 			Bullet b = new Bullet();
 			this.bullets.add(b);

@@ -7,7 +7,7 @@ public class Weapon {
 	private int x;
 	private int y;
 	private int power;
-	private boolean use;
+	private boolean use;//false表示不能再使用
 	private int dir;
 	private Color color;
 	

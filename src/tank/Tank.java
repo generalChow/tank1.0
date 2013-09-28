@@ -1,6 +1,7 @@
 package tank;
 
 import java.awt.Color;
+import java.awt.Rectangle;
 
 import util.Constant;
 
@@ -12,8 +13,19 @@ public class Tank {
 	private int life;
 	private int speed;
 	private Color color;
+	private int r;//ÔâÊÜ¹¥»÷µÄ·¶Î§
 	
 	
+	
+	
+
+	public int getR() {
+		return r;
+	}
+
+	public void setR(int r) {
+		this.r = r;
+	}
 
 	public Color getColor() {
 		return color;
@@ -84,5 +96,9 @@ public class Tank {
 			return true;
 		}
 		return false;
+	}
+	
+	public Rectangle getRectangle(){
+		return new Rectangle(this.getX() , this.getY(), this.getR(), this.getR());
 	}
 }

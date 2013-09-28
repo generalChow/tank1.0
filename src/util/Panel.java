@@ -56,10 +56,12 @@ public class Panel extends JPanel implements Runnable {
 	public void paint(Graphics g) {
 		// TODO Auto-generated method stub
 		super.paint(g);
+		setNextSatusXy();
 		drawHero(g, h1);
 		drawMyBullet(g);
-		drawEnemies(g);
 		drawEBs(g);
+		drawEnemies(g);
+
 	}
 
 	public void drawHero(Graphics g, Tank h) {
@@ -71,7 +73,7 @@ public class Panel extends JPanel implements Runnable {
 			g.fill3DRect(h.getX() + 15, h.getY(), 5, 30, false);
 			g.fill3DRect(h.getX() + 5, h.getY() + 5, 10, 20, false);
 			g.fillOval(h.getX() + 6, h.getY() + 11, 8, 8);
-			g.drawLine(h.getY() + 10, h.getY() + 15, h.getX() + 10, h.getY());
+			g.drawLine(h.getX() + 10, h.getY() + 15, h.getX() + 10, h.getY());
 			break;
 		case 39:// right
 			g.fill3DRect(h.getX(), h.getY(), 30, 5, false);
@@ -102,72 +104,87 @@ public class Panel extends JPanel implements Runnable {
 	}
 
 	public void drawMyBullet(Graphics g) {
-        setMyNextBulletXy();
+		//setMyNextBulletXy();
 		if (this.hb.size() > 0) {
 			Bullet b;
-			g.setColor(Color.BLUE);
 			for (int i = 0; i < this.hb.size(); i++) {
 				b = this.hb.get(i);
-
+				g.setColor(Color.BLUE);
 				g.fill3DRect(b.getX(), b.getY(), b.getR(), b.getR(), false);
-
 			}
 		}
 	}
 
 	public void drawEnemies(Graphics g) {
-		setEnemiesStatus();// 设置下一秒 敌军坦克xy
+		//setEnemiesStatus();// 设置下一秒 敌军坦克xy
 		Enemy e;
 		for (int i = 0; i < this.enemyList.size(); i++) {
 			e = this.enemyList.get(i);
-			drawHero(g, e);
-		}
-	}
-	/**
-	 * 画出敌军的子弹
-	 * @param g
-	 */
-	public void drawEBs(Graphics g){
-		setEnemiesBulletXy();
-		Bullet b;
-		for(int i=0;i<this.eb.size();i++){
-			b = this.eb.get(i);
-			g.fill3DRect(b.getX(), b.getY(), b.getR(), b.getR(), false);
-			g.setColor(this.eb.get(i).getColor());
-		}	
-	}
-	
-	public void setNextBulletXy(){
-		
-	}
-
-	public void setMyNextBulletXy(){
-		
-		for (int i = 0; i < hb.size(); i++) {
-			if (hb.get(i).Cross()) {
-				hb.remove(hb.get(i));
-				// System.out.println("删除一课子弹");
-				// System.out.println("还剩下"+hb.size());
-			}else {
-				hb.get(i).move();
+			if (e.getLife() > 0) {
+				drawHero(g, e);
+			} else {
+				this.enemyList.remove(i);
 			}
 		}
 	}
+
+	/**
+	 * 画出敌军的子弹
+	 * 
+	 * @param g
+	 */
+	public void drawEBs(Graphics g) {
+		//setEnemiesBulletXy();
+		Bullet b;
+		for (int i = 0; i < this.eb.size(); i++) {
+			b = this.eb.get(i);
+			if (b.isUse()) {
+				g.fill3DRect(b.getX(), b.getY(), b.getR(), b.getR(), false);
+				g.setColor(this.eb.get(i).getColor());
+			} else {
+				// this.eb.remove(b);
+			}
+		}
+	}
+
+	public void setNextBulletXy() {
+
+	}
+
+	public void setMyNextBulletXy() {
+
+		for (int i = 0; i < hb.size(); i++) {
+			if (hb.get(i).Cross()||!hb.get(i).isUse()) {
+				hb.remove(hb.get(i));
+				System.out.println("删除一课子弹");
+				// System.out.println("还剩下"+hb.size());
+			} else {	
+				
+				for(int j =0;j<this.enemyList.size();j++){
+					hb.get(i).hitTank(this.enemyList.get(j));
+				}
+				hb.get(i).move();	
+				}
+
+			}
+		}
 	
-	public void setEnemiesBulletXy(){
+
+	public void setEnemiesBulletXy() {
 		for (int i = 0; i < this.eb.size(); i++) {
 			if (this.eb.get(i).Cross()) {
 				this.eb.remove(this.eb.get(i));
-				System.out.println("敌军删除一课子弹");
-				 System.out.println("还剩下"+hb.size());
-			}else {
+				// System.out.println("敌军删除一课子弹");
+				// System.out.println("还剩下"+hb.size());
+			} else {
 				this.eb.get(i).move();
 			}
 		}
 	}
+
 	public Panel(int enemyNum) {
 		// TODO Auto-generated constructor stub
-		this.h1 = new Hero(0, 0, 38, 3, Color.CYAN);
+		this.h1 = new Hero(0, 0, 38, 3, Color.CYAN, 30);
 		this.setSize(Constant.getPwithd(), Constant.getPhieght());
 		this.setBackground(Color.black);
 		System.out.println(this.getHeight());
@@ -183,7 +200,6 @@ public class Panel extends JPanel implements Runnable {
 		while (true) {
 			try {
 				Thread.sleep(50);
-				
 
 				repaint();
 			} catch (InterruptedException e) {
@@ -198,21 +214,23 @@ public class Panel extends JPanel implements Runnable {
 	 */
 	public void setEnemiesStatus() {
 		// TODO Auto-generated method stub
-		Enemy e ;
+		Enemy e;
 		for (int i = 0; i < this.enemyList.size(); i++) {
-			
-			e =this.enemyList.get(i);
+
+			e = this.enemyList.get(i);
 			e.move();
-			if(e.isFire()){
-				
+			if (e.isFire()) {
 				Bullet bullet = new Bullet();
-				this.eb.add(e.shootOne(bullet,Color.green, 5, 5, 6));
+				this.eb.add(e.shootOne(bullet, Color.green, 5, 5, 6));
 			}
 		}
-		
+
 	}
 	
+	public void setNextSatusXy(){
+		setEnemiesBulletXy();
+		setMyNextBulletXy();
+		setEnemiesStatus();
+	}
 
-	
-	
 }

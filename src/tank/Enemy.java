@@ -101,6 +101,7 @@ public class Enemy extends Tank{
 		this.setX(x);
 		this.setY(y);
 		this.setLife(100);
+		this.setR(30);
 		
 	}
 	
@@ -112,9 +113,18 @@ public class Enemy extends Tank{
 		b.setPower(power);
 		b.setR(r);
 		b.setType("hero");
+		b.setColor(color);
 		b.setSpeed(speed);
 	}
-	
+	/**
+	 * 主要是给敌军使用的
+	 * @param b
+	 * @param color
+	 * @param power
+	 * @param r
+	 * @param speed
+	 * @return
+	 */
 	public Bullet shootOne(Bullet b,Color color,int power,int r,int speed){
 		b.setDir(this.getDir());
 		b.setX(this.getX());
@@ -124,13 +134,16 @@ public class Enemy extends Tank{
 		b.setType("enemy");
 		b.setSpeed(speed);
 		b.setColor(color);
+		b.setUse(true);
 		return b;
 	}
 	
 	public boolean isFire(){
+		//System.out.println("判断是不是发射子弹");
 		Random ran = new Random();
 		int num = ran.nextInt(10);
 		if(num<1){
+		//	System.out.println("发射子弹");
 		return true;
 		}else{
 			return false;

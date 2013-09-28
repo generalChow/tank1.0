@@ -1,5 +1,8 @@
 package tank.weapon;
 
+import java.awt.Rectangle;
+
+import tank.Tank;
 import util.Constant;
 
 public class Bullet extends Weapon {
@@ -59,5 +62,18 @@ public class Bullet extends Weapon {
 			return true;
 		}
 		return false;
+	}
+	
+	public boolean hitTank(Tank t){
+		System.out.println("判断是不是击中坦克");
+		if(this.getRectangle().intersects(t.getRectangle())){
+			System.out.println("hit tank!");
+			t.setLife(0);
+			this.setUse(false);
+		}
+		return true;
+	}
+	public Rectangle getRectangle(){
+		return new Rectangle(this.getX() , this.getY(), this.getR(), this.getR());
 	}
 }

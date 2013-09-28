@@ -58,9 +58,11 @@ public class GameMain extends KeyAdapter {
 		} else if (key.getKeyCode() == 32) {
 			if (this.getP().getH1().getBullets().size() > 0&&((timeTemp-this.mills>500||this.mills==0))) {
 				b = this.getP().getH1().getBullets().get(0);
+				//System.out.println("fashedidan");
 				this.getP().getH1().shoot(0, Color.BLUE, 10, 5, 6);//发射--设置子弹的属性
 				this.getP().getHb().add(b);//把子弹添加到画板
 				this.getP().getH1().removeBullet(0);//把子弹从子弹夹拿出来
+				//System.out.println(this.getP().getHb().size());
 				this.p.getH1().getBullets().remove(0);
 				this.mills=timeTemp;
 			} else if(this.getP().getH1().getBullets().size()==0) {
