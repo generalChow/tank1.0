@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import tank.message.Message;
 import tank.weapon.Bullet;
 import util.Constant;
 
@@ -102,6 +103,7 @@ public class Hero extends Tank {
 			Bullet b = new Bullet();
 			this.bullets.add(b);
 		}
+	   this.setMessage(new Message());
 	}
 
 }
